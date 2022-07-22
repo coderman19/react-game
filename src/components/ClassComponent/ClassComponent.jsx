@@ -24,11 +24,7 @@ export class ClassComponent extends React.Component {
       count: state.count + 1,
     }));
     this.setState(state => {
-      if (!state.userNumber) {
-        return {
-          result: 'введите число',
-        };
-      }
+      if (!state.userNumber) return state;
 
       if (state.userNumber > state.randomNumber) {
         return {
@@ -48,8 +44,8 @@ export class ClassComponent extends React.Component {
       return {
         result: `Поздравляем, загаданное число ${state.userNumber}`,
         userNumber: '',
-        returned: true,
-        play: 'сыграть еще',
+        returned: false,
+        play: <button onChange={this.returnPlay()}>сыграть еще</button>,
       };
     });
   };
@@ -60,13 +56,11 @@ export class ClassComponent extends React.Component {
     });
   };
 
-  // эта функция не работает, не могу реализовать его работу...
   returnPlay = () => {
-    console.log('return');
     this.setState(state => ({
       count: 0,
-      returned: false,
-      result: '',
+      // returned: false,
+      // result: 'введите число',
     }));
   };
 
@@ -93,8 +87,7 @@ export class ClassComponent extends React.Component {
             </label>
             <input className={style.input} type='number' id='user_number'
               onChange={this.handleChange} value={this.state.userNumber} />
-            <button className={style.btn}
-              onClick={this.state.play}>
+            <button className={style.btn}>
               {this.state.play}
             </button>
           </form>
