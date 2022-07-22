@@ -7,14 +7,16 @@ import PropTypes from 'prop-types';
 
 export class ClassComponent extends React.Component {
   state = {
+    returned: false,
     result: 'Результат',
     userNumber: '',
+    play: 'Угадать',
+    rePlay: 'сыграть еще',
     randomNumber:
         Math.floor(Math.random() * this.props.max - this.props.min) +
         this.props.min,
     count: 0,
   };
-
 
   handleSubmit = (e) => {
     e.preventDefault();
@@ -24,7 +26,7 @@ export class ClassComponent extends React.Component {
     this.setState(state => {
       if (!state.userNumber) {
         return {
-          result: `Введите число`,
+          result: 'введите число',
         };
       }
 
@@ -32,6 +34,7 @@ export class ClassComponent extends React.Component {
         return {
           result: `${state.userNumber} больше загаданного числа`,
           userNumber: '',
+          play: 'Угадать',
         };
       }
 
@@ -39,40 +42,63 @@ export class ClassComponent extends React.Component {
         return {
           result: `${state.userNumber} меньше загаданного числа`,
           userNumber: '',
+          play: 'Угадать',
         };
       }
-
       return {
-        result: `Вы угадали, загаданное число ${state.userNumber},
-        число Ваших попыток ${state.count}`,
+        result: `Поздравляем, загаданное число ${state.userNumber}`,
         userNumber: '',
+        returned: true,
+        play: 'сыграть еще',
       };
     });
   };
 
-  handleChange = (e) => {
+  handleChange = e => {
     this.setState({
       userNumber: e.target.value,
     });
+  };
+
+  // эта функция не работает, не могу реализовать его работу...
+  returnPlay = () => {
+    console.log('return');
+    this.setState(state => ({
+      count: 0,
+      returned: false,
+      result: '',
+    }));
   };
 
   render() {
     console.log(this.state.count);
     console.log(this.state);
     return (
-      <div className={style.game}>
-        <p className={style.result}>{this.state.result}</p>
-        <p className={style.result}>{this.state.count}</p>
+      <div className={style.container}>
+        <div className={style.game}>
+          <p className={style.result}>
+            <span className={style.countUp}>
+              {this.state.result}
+            </span>
+          </p>
+          <p className={style.result}>
+          число попыток
+            <span className={style.count}>
+              {this.state.count}
+            </span></p>
 
-        <form className={style.form} onSubmit={this.handleSubmit}>
-          <label className={style.label} htmlFor='user_number'>
-            Угадай число
-          </label>
-          <input className={style.input} type='number' id='user_number'
-            onChange={this.handleChange} value={this.state.userNumber} />
-          <button className={style.btn}
-            onClick={this.handler}>Угадать</button>
-        </form>
+          <form className={style.form} onSubmit={this.handleSubmit}>
+            <label className={style.label} htmlFor='user_number'>
+              Угадай число
+            </label>
+            <input className={style.input} type='number' id='user_number'
+              onChange={this.handleChange} value={this.state.userNumber} />
+            <button className={style.btn}
+              onClick={this.state.play}>
+              {this.state.play}
+            </button>
+          </form>
+        </div>
       </div>
     );
   }

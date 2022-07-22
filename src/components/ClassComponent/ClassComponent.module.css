@@ -1,7 +1,19 @@
+.container {
+    width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
 .game {
-    border: 1px solid white;
+    border: 2px solid rgb(5, 5, 5);
     border-radius: 8px;
     padding: 20px 30px 40px;
+    background-color: rgba(37, 34, 34, 0.938);
+    box-shadow: 5px 5px 8px #24eeddde;
+    margin-top: 20%;
 }
 
 .result {
@@ -19,6 +31,8 @@
 
 .label {
     display: block;
+    color: rgb(149, 230, 142);
+    font-size: 18px;
 }
 
 .input {
@@ -41,3 +55,20 @@
     border-color: white;
     color: black;
 }
+
+.result {
+    color: rgb(148, 232, 235);
+}
+
+.countUp {
+    color: rgb(245, 232, 48);
+    font-size: 24px;
+    padding-left: 10px;
+}
+
+.count {
+    color: rgb(0, 255, 34);
+    font-size: 24px;
+    padding-left: 10px;
+}
+
