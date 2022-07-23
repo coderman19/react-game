@@ -24,7 +24,11 @@ export class ClassComponent extends React.Component {
       count: state.count + 1,
     }));
     this.setState(state => {
-      if (!state.userNumber) return state;
+      if (!state.userNumber) {
+        return {
+          result: `Введите число`,
+        };
+      }
 
       if (state.userNumber > state.randomNumber) {
         return {
@@ -44,8 +48,8 @@ export class ClassComponent extends React.Component {
       return {
         result: `Поздравляем, загаданное число ${state.userNumber}`,
         userNumber: '',
-        returned: false,
-        play: <button onChange={this.returnPlay()}>сыграть еще</button>,
+        returned: true,
+        // play: <button onChange={this.returnPlay()}>сыграть еще</button>,
       };
     });
   };
@@ -57,10 +61,11 @@ export class ClassComponent extends React.Component {
   };
 
   returnPlay = () => {
+    console.log('работает');
     this.setState(state => ({
-      count: 0,
-      // returned: false,
-      // result: 'введите число',
+      count: -1,
+      returned: false,
+      result: 'введите число',
     }));
   };
 
@@ -87,9 +92,10 @@ export class ClassComponent extends React.Component {
             </label>
             <input className={style.input} type='number' id='user_number'
               onChange={this.handleChange} value={this.state.userNumber} />
-            <button className={style.btn}>
-              {this.state.play}
-            </button>
+            {!this.state.returned ?
+              <button className={style.btn}>{this.state.play}</button> :
+              <button className={style.btn} onClick={this.returnPlay}>
+                {this.state.rePlay}</button>}
           </form>
         </div>
       </div>
